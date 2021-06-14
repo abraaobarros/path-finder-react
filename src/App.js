@@ -9,10 +9,13 @@ const Row = ({ children }) => {
   </div>
 }
 
-const Cell = ({ x, y, isSelected, setSelected }) => {
+const Cell = ({ x, y, isSelected, setSelected, backgroundColor}) => {
   const classNames = `cell ${isSelected && 'selected'}`
   return <div
     className={classNames}
+    style={{
+      backgroundColor
+    }}
     onClick={() => setSelected(x, y)}
   >
     <p>[{x}, {y}]</p>
@@ -24,9 +27,6 @@ function App() {
   const n_cell = 20
   const [selected, setSelected] = useState({})
   const [tool, setTool] = useState('scanline')
-
-
-
   const onSelect = (x, y) => {
     for (let j = x; j < n_rows; j++) {
       for (let i = y; i < n_cell; i++) {
@@ -34,7 +34,6 @@ function App() {
       }
     }
   }
-
   const renderRow = useCallback(() => {
     console.log("RENDER")
     let arr = []
@@ -46,6 +45,7 @@ function App() {
           y={y}
           isSelected={selected[x + y * 100]}
           setSelected={onSelect}
+          backgroundColor={'red'}
         />)
       }
       arr.push(<Row>
@@ -58,7 +58,7 @@ function App() {
   return (
     <div className="App">
       <Row>
-        
+        <div>Run</div>
       </Row> 
       {renderRow()}
     </div>
